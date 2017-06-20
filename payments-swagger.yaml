@@ -57,7 +57,6 @@ paths:
             modifications are introduced.
           type: integer
           required: true
-          default: 1
         - name: payment
           in: path
           description: Merchant-specific identifier for the payment.
@@ -131,6 +130,8 @@ paths:
         Create a new authorized payment based on encrypted credit card details.
       tags:
         - payments
+      security:
+        - OAuth2: [auth_token_payment]
       parameters:
         - name: API-Version
           in: header
@@ -140,7 +141,6 @@ paths:
             modifications are introduced.
           type: integer
           required: true
-          default: 1
         - name: payment
           in: path
           description: >
@@ -246,6 +246,8 @@ paths:
           Create a new authorized payment based on a credit card token.
       tags:
         - payments
+      security:
+        - OAuth2: [auth_token_payment]
       parameters:
         - name: API-Version
           in: header
@@ -255,7 +257,6 @@ paths:
             modifications are introduced.
           type: integer
           required: true
-          default: 1
         - name: payment
           in: path
           description: >
@@ -360,6 +361,8 @@ paths:
       operationId: capture_payment
       tags:
         - payments
+      security:
+        - OAuth2: [capture_payment]
       summary: Capture payment
       description: >
         The capture operation withdraws the authorized amount, either in whole or in part. For example: If a debit card was used for the purchase, then money is withdrawn from the customer's bank account.
@@ -374,7 +377,6 @@ paths:
             modifications are introduced.
           type: integer
           required: true
-          default: 1
         - name: payment
           in: path
           description: The payment id of the pre-auth that will be captured.
@@ -473,6 +475,8 @@ paths:
       operationId: cancel_payment
       tags:
         - payments
+      security:
+        - OAuth2: [cancel_payment]
       summary: Cancel payment
       description: |
         The Cancel operation interrupts a transaction before the authorized amount has been collected.
@@ -488,7 +492,6 @@ paths:
             modifications are introduced.
           type: integer
           required: true
-          default: 1
         - name: payment
           in: path
           description: The payment id of the pre-auth that will be captured.
@@ -580,6 +583,8 @@ paths:
       operationId: refund_payment
       tags:
         - payments
+      security:
+        - OAuth2: [refund_payment]
       summary: Refund payment
       description: |
         The Refund operation will return the captured amount, in part or in full, to the customer. Only captured payments can be refunded.
@@ -594,7 +599,6 @@ paths:
             modifications are introduced.
           type: integer
           required: true
-          default: 1
         - name: payment
           in: path
           description: The payment id of the payment that will be refunded.
