@@ -13,6 +13,8 @@ info:
 schemes:
   - https
 
+host: api.bambora.com
+
 basePath: /v1
 
 consumes:
@@ -21,6 +23,18 @@ consumes:
 produces:
   - application/json
   - application/problem+json
+
+securityDefinitions:
+  OAuth2:
+    type: oauth2
+    flow: application
+    tokenUrl: https://auth.bambora.com/connect/token
+    scopes:
+      auth_token_payment: auth_token
+      cancel_payment: cancel
+      capture_payment: capture
+      read_payment: read
+      refund_payment: refund
 
 paths:
   /merchants/{merchant}/payments/{payment}/:
@@ -32,6 +46,8 @@ paths:
         payment. Returns payment details and status.
       tags:
         - payments
+      security:
+        - OAuth2: [read_payment]
       parameters:
         - name: API-Version
           in: header
@@ -41,6 +57,7 @@ paths:
             modifications are introduced.
           type: integer
           required: true
+          default: 1
         - name: payment
           in: path
           description: Merchant-specific identifier for the payment.
@@ -123,6 +140,7 @@ paths:
             modifications are introduced.
           type: integer
           required: true
+          default: 1
         - name: payment
           in: path
           description: >
@@ -237,6 +255,7 @@ paths:
             modifications are introduced.
           type: integer
           required: true
+          default: 1
         - name: payment
           in: path
           description: >
@@ -355,6 +374,7 @@ paths:
             modifications are introduced.
           type: integer
           required: true
+          default: 1
         - name: payment
           in: path
           description: The payment id of the pre-auth that will be captured.
@@ -468,6 +488,7 @@ paths:
             modifications are introduced.
           type: integer
           required: true
+          default: 1
         - name: payment
           in: path
           description: The payment id of the pre-auth that will be captured.
@@ -573,6 +594,7 @@ paths:
             modifications are introduced.
           type: integer
           required: true
+          default: 1
         - name: payment
           in: path
           description: The payment id of the payment that will be refunded.
